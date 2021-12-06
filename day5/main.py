@@ -6,7 +6,6 @@ def update_point(point):
     else:
         points[point] = 1
 
-
 def process_line(x1, y1, x2, y2):
     x, y = x1, y1
     update_point(f"{x},{y}")
@@ -18,20 +17,19 @@ def process_line(x1, y1, x2, y2):
         y = y + (y != y2) * ky
         update_point(f"{x},{y}")
 
-
 points = {}
 count = 0
 
-
-with open('test_input') as file:
+with open('input') as file:
     for input_line in file:
         s = input_line.strip().split(" -> ")
         x1, y1 = [int(x) for x in s[0].split(",")]
         x2, y2 = [int(x) for x in s[1].split(",")]
+        if SKIP_DIAGONALS and not(x1 == x2 or y1 == y2):
+            continue
         process_line(x1, y1, x2, y2)
 
-
 for k in points.values():
-        count += (k > 1)
+    count += (k > 1)
 
 print(count)
