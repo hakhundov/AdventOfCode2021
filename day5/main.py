@@ -1,3 +1,5 @@
+# AoC - Day 5
+
 SKIP_DIAGONALS = False
 
 def update_point(point):

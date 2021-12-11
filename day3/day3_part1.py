@@ -1,3 +1,5 @@
+# AoC - Day 3
+
 file = open("day3_input", "r")
 # sample input 110111110001
 total_lines = 0

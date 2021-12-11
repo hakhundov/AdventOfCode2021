@@ -1,3 +1,5 @@
+# AoC - Day 6
+
 from collections import defaultdict
 
 bins = defaultdict(int)

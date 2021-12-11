@@ -1,3 +1,5 @@
+# AoC - Day 3
+
 file = open("day3_input", "r")
 
 # load input into a list

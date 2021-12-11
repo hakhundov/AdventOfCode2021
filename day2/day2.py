@@ -1,3 +1,5 @@
+# AoC - Day 2
+
 f = open("day2_input", "r")
 
 horizontal = 0
