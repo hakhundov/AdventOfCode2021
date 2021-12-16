@@ -1,22 +1,27 @@
-with open('input') as file:
+with open('test_input') as file:
     input_lines = file.readlines()
 
-y = len(input_lines)+2
+y_max = len(input_lines) + 2
 ARR = []
 # pad with 9s
 for idx, line in enumerate(input_lines):
     ARR.insert(idx, ['9'] + list(line.strip()) + ['9'])
-x = len(ARR[0])
-ARR.insert(0, ['9' for x in range(x)])
-ARR.insert(y+1, ['9' for x in range(x)])
+x_max = len(ARR[0])
+ARR.insert(0, ['9' for i in range(x_max)])
+ARR.insert(y_max + 1, ['9' for i in range(x_max)])
+
+low_points = []
 
 risk_level = 0
-for i in range(1, y-1, 1):
-    for k in range(1, x-1, 1):
-        if      ARR[i][k] < ARR[i][k - 1] and \
-                ARR[i][k] < ARR[i][k + 1] and \
-                ARR[i][k] < ARR[i - 1][k] and \
-                ARR[i][k] < ARR[i + 1][k]:
-            risk_level += int(ARR[i][k]) + 1
-            print(ARR[i][k])
+for y in range(1, y_max - 1, 1):
+    for x in range(1, x_max - 1, 1):
+        if      ARR[y][x] < ARR[y][x - 1] and \
+                ARR[y][x] < ARR[y][x + 1] and \
+                ARR[y][x] < ARR[y - 1][x] and \
+                ARR[y][x] < ARR[y + 1][x]:
+            risk_level += int(ARR[y][x]) + 1
+            print(ARR[y][x])
+            low_points.append([x, y]) #x, y
+
+print(low_points)
 print(risk_level)
