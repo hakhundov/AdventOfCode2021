@@ -9,7 +9,7 @@ x_max = len(ARR[0])
 ARR.insert(0, ['-' for i in range(x_max)])
 ARR.insert(y_max + 1, ['-' for i in range(x_max)])
 
-count = 0
+global_count = 0
 steps = 100
 
 def get_neighbors(cy, cx):
@@ -28,8 +28,8 @@ def check_energy_levels():
                 flash(y, x)
 
 def flash(y, x):
-    global count
-    count += 1
+    global global_count
+    global_count += 1
     ARR[y][x] = 0
     for point in get_neighbors(y, x):
         if ARR[point[0]][point[1]] != '-' and ARR[point[0]][point[1]] != 0:
@@ -37,8 +37,13 @@ def flash(y, x):
             if ARR[point[0]][point[1]] > 9:
                 flash(point[0], point[1])
 
+# steps = 300
+
 for i in range(steps):
+    count_old = global_count
     increase_energy_levels()
     check_energy_levels()
+    if global_count - count_old == 100:
+        print(f'Mega flash on step: {i+1}')
 
-print(count)
+print(f'Total number of flashes: {global_count}')
