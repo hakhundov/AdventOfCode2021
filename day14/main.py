@@ -1,4 +1,7 @@
 from collections import Counter
+import time
+
+start_time = time.time()
 
 with open('input') as f: input_lines = f.read()
 
@@ -10,7 +13,7 @@ d = {}
 
 copy = polymer.copy()
 
-steps = 10
+steps = 15
 
 for i in range(steps):
     new_poly = []
@@ -28,6 +31,7 @@ for i in range(steps):
 
 # print(new_poly)
 # print(copy)
+print("--- %s seconds ---" % (time.time() - start_time))
 
 c = list(Counter(copy).values())
 c.sort()
