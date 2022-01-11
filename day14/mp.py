@@ -41,9 +41,9 @@ if __name__ == '__main__':
         # print(f'Step {i}: Polymer: {len(new_poly)}')
         with concurrent.futures.ProcessPoolExecutor() as executor:
 
-            segments = split_list(polymer, wanted_parts=16) # this basically determines the number of processes to be run...
+            segments = split_list(polymer, wanted_parts=8) # this basically determines the number of processes to be run...
             # print(segments)
-            results = [exedaycutor.submit(consturct_new_poly, segment) for segment in segments]
+            results = [executor.submit(consturct_new_poly, segment) for segment in segments]
             temp = polymer.pop() # save the last element in the initial polymer to be appended later
             polymer = []
             for f in concurrent.futures.as_completed(results):
