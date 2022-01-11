@@ -1,37 +1,29 @@
-#TODO: Note: Part 2 doesn't work. (takes too long, fix it)
-
+# Implementing using counters, much faster :)
 from collections import Counter
-import time
+from collections import defaultdict
 
-start_time = time.time()
+with open('input') as f: file_input = f.read()
+input_chunks = file_input.split('\n\n')
+polymer = list(input_chunks[0])
+pairs = [''.join(p) for p in zip(polymer, polymer[1:])]
+instructions = [x.split(' -> ') for x in input_chunks[1].split('\n')]
+rules = {k: (k[0] + v, v + k[1]) for k, v in instructions}
 
-with open('test_input') as f: input_lines = f.read()
+def calc_poly(steps):
+    ctr = Counter(pairs)
+    for step in range(steps):
+        #This is what I am doing differently than the other guy in terms of initializing
+        new_ctr = defaultdict(int)
 
-input = input_lines.split('\n\n')
-initial_polymer = list(input[0])
-instructions = [x.split(' -> ') for x in input[1].split('\n')]
-d = {}
-[d.update({k:v}) for k,v in instructions]
+        for k, v in ctr.items():
+            new_ctr[rules[k][0]] += v
+            new_ctr[rules[k][1]] += v
+        ctr = new_ctr
 
-polymer = initial_polymer.copy()
+    letters = Counter()
+    for v, k in ctr.items():
+        letters.update({v[0]: k})
+    letters.update({polymer[-1]})
+    return letters.most_common(1)[0][1] - letters.most_common()[-1][1]
 
-steps = 10
-
-for i in range(steps):
-    new_poly = []
-    for k in range(0, len(polymer) - 1, 1):
-        str = ''.join(polymer[k:k + 2])
-        if str in d.keys():
-            new_poly.append(polymer[k])
-            new_poly.append(d[str])
-        else:
-            new_poly.append(polymer[k])
-    new_poly.append(polymer[len(polymer) - 1])
-    polymer = new_poly
-    # print(f'Step {i}: Polymer: {len(new_poly)}')
-
-print("--- %s seconds ---" % (time.time() - start_time))
-
-c = list(Counter(polymer).values())
-c.sort()
-print(c[len(c)-1] - c[0])
+print(calc_poly(40))
