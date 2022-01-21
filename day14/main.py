@@ -9,6 +9,8 @@ pairs = [''.join(p) for p in zip(polymer, polymer[1:])]
 instructions = [x.split(' -> ') for x in input_chunks[1].split('\n')]
 rules = {k: (k[0] + v, v + k[1]) for k, v in instructions}
 
+#TODO: Make it accept a list of steps, and produce a result list for all the steps
+
 def calc_poly(steps):
     ctr = Counter(pairs)
     for step in range(steps):
