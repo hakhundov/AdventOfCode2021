@@ -3,10 +3,12 @@ from collections import defaultdict
 with open('input') as f: lines = f.readlines()
 G = defaultdict(set)
 
+# Add all edges from the input to the adjacency list
 for l in lines:
     v1, v2 = l.strip().split('-')
     G[v1].add(v2)
 
+# Make sure that all nodes in the graph are represented in the dict
 for k, val in G.copy().items():
     for v in val:
         G[v].add(k)
@@ -39,11 +41,12 @@ def visit_node(vertex, _allow_duplicates=False):
             visit_node(node, _allow_duplicates)
             path.pop()
 
-counter = 0
-visit_node('start', _allow_duplicates=False)
-print(counter)
-assert (counter == 5104)
-counter = 0
-visit_node('start', _allow_duplicates=True)
-print(counter)
-assert (counter == 149220)
+
+def count_paths(_allow_duplicates):
+    global counter
+    counter = 0
+    visit_node('start', _allow_duplicates)
+    return counter
+
+print(f'{count_paths(_allow_duplicates=False)}')
+print(f'{count_paths(_allow_duplicates=True)}')
